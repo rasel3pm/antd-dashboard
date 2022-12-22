@@ -1,17 +1,18 @@
 import React from "react";
-import SalesRate from "../components/SalesRate";
+import HeroSection from "../components/HeroSection";
+// import SalesRate from "../components/SalesRate";
 import SampleCard from "../components/SampleCard";
 
 const Home = () => {
   return (
     <div>
+      <HeroSection />
       <div className="card_container">
         <SampleCard />
         <SampleCard />
         <SampleCard />
         <SampleCard />
       </div>
-      <SalesRate />
     </div>
   );
 };

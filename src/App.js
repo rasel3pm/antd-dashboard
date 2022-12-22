@@ -1,9 +1,15 @@
 import "./App.css";
 import "antd/dist/antd-with-locales";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./view/Home";
-import Navbar from "./components/Navbar";
+import Navbar from "./common/Navbar";
+import Dashboard from "./pages/Dashboard";
+import Error from "./pages/Error";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
+import LogIn from "./components/LogIn";
+import Register from "./components/Register";
+// import PrivateRoute from "./common/PrivateRoute";
 
 function App() {
   return (
@@ -12,6 +18,12 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/logIn" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </>
