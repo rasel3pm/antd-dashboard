@@ -1,95 +1,79 @@
-import React from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import React, { useState } from "react";
+import { Button, Space } from "antd";
 import { Link } from "react-router-dom";
+import swal from "sweetalert";
+import axios from "axios";
 
 const Register = () => {
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const [signUp, setSignUp] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const eventHadaler = (e) => {
+    let data = { ...signUp };
+    data[e.target.name] = e.target.value;
+    setSignUp(data);
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.target.reset();
+    axios
+      .post("http://localhost:5000/create-user", signUp)
+      .then((data) => swal("Good job!", "Account created", "success", data))
+      .catch((err) => swal(err.data.message + "Account not created", "danger"));
   };
   return (
     <div>
-      <Form
-        className="form_container"
-        name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
-      >
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: "Please input your username!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Valid Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your email!",
-            },
-          ]}
-        >
-          <Input type="email" />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your password!",
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-          <Button type="link">
-            <Link to="/login">Login</Link>
-          </Button>
-        </Form.Item>
-      </Form>
+      <h1 className="text-white">Register Account</h1>
+      <div className="form_container">
+        <form onSubmit={handleSubmit}>
+          <label for="name">Name</label> <br />
+          <input
+            onChange={(e) => eventHadaler(e)}
+            name="name"
+            type="text"
+            placeholder="Enter name"
+            className="form-control"
+          />
+          <br />
+          <label for="Email">Email</label> <br />
+          <input
+            onChange={(e) => eventHadaler(e)}
+            name="email"
+            type="email"
+            placeholder="Enter email"
+            className="form-control"
+          />{" "}
+          <br />
+          <label for="Password">Password</label> <br />
+          <input
+            onChange={(e) => eventHadaler(e)}
+            name="password"
+            type="password"
+            placeholder="Enter password"
+            className="form-control"
+          />{" "}
+          <br />
+          <input
+            onChange={(e) => eventHadaler(e)}
+            name="avater"
+            type="file"
+            placeholder="Input file"
+            className="form-control"
+          />{" "}
+          <br />
+          <Space wrap>
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
+            <Link to="/login">
+              <Button>login</Button>
+            </Link>
+          </Space>
+        </form>
+      </div>
     </div>
   );
 };

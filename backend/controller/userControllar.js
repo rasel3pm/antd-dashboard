@@ -1,10 +1,10 @@
-const Register = require("../model/userRegister");
+const User = require("../model/userRegister");
 const bcrypt = require("bcrypt");
 
 exports.createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const user = await Register.findOne({ email: email });
+    const user = await User.findOne({ email: email });
 
     if (user) {
       throw error("Already have an account", 400);
@@ -14,7 +14,7 @@ exports.createUser = async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     req.body.password = hash;
 
-    const newUser = await new Register(req.body);
+    const newUser = await new User(req.body);
     const data = await newUser.save();
 
     res.status(200).json({ message: "User Created Successfully", user: data });
@@ -25,7 +25,7 @@ exports.createUser = async (req, res) => {
 
 exports.allUsers = async (req, res) => {
   try {
-    const users = await Register.find();
+    const users = await User.find();
     res.status(200).json({ message: "all User", users });
   } catch (error) {}
 };

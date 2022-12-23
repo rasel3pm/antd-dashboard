@@ -1,12 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import swal from "sweetalert";
 
 const LogIn = () => {
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const eventHadaler = (e) => {
+    let data = { ...login };
+    data[e.target.name] = e.target.value;
+    setLogin(data);
+  };
+  const loginhandelar = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/login", login)
+      .then((data) => swal("login", "success", data))
+      .catch((err, data) => err.response.data.message);
+  };
   return (
     <div className="logIn_form">
       <Form
+        onClick={loginhandelar}
         name="normal_login"
         className="login-form form_container"
         initialValues={{
@@ -23,6 +43,7 @@ const LogIn = () => {
           ]}
         >
           <Input
+            onChange={(e) => eventHadaler(e)}
             type="email"
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Email"
@@ -38,6 +59,7 @@ const LogIn = () => {
           ]}
         >
           <Input
+            onChange={(e) => eventHadaler(e)}
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"

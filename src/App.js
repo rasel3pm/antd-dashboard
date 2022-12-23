@@ -9,8 +9,9 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import LogIn from "./components/LogIn";
 import Register from "./components/Register";
+import Users from "./pages/Users";
 // import PrivateRoute from "./common/PrivateRoute";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/logIn" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/Users" element={<Users />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
