@@ -1,5 +1,6 @@
 const User = require("../model/userRegister");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.createUser = async (req, res) => {
   try {
@@ -33,13 +34,29 @@ exports.allUsers = async (req, res) => {
 //login controller
 
 exports.loginController = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
+    const user = await User.find({ email: email });
+    if (user && user.length > 0) {
+      const validPassword = await bcrypt.compare(password, user[0].password);
 
-    if (!email || !password) {
-      res.status(404).json({ message: "Invalid Required Data" });
+      if (validPassword) {
+        const token = jwt.sign(
+          {
+            email: user[0].email,
+            userId: user[0]._id,
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: "1h" }
+        );
+        res.status(201).json({ access_token: token, message: "login success" });
+      } else {
+        res.status(401).json({ message: "wrong email or password" });
+      }
+    } else {
+      res.status(401).json({ message: "wrong email or password" });
     }
   } catch (err) {
-    console.log(err);
+    res.status(401).json({ message: "wrong email or password" });
   }
 };

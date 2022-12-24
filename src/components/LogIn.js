@@ -21,7 +21,7 @@ const LogIn = () => {
     axios
       .post("http://localhost:5000/login", login)
       .then((data) => swal("login", "success", data))
-      .catch((err, data) => err.response.data.message);
+      .catch((err) => swal("login", "success", err));
   };
   return (
     <div className="logIn_form">
