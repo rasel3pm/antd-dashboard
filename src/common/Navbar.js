@@ -1,6 +1,7 @@
 import React from "react";
 import { Menu } from "antd";
 import { NavLink } from "react-router-dom";
+import MenuButton from "../components/MenuButton";
 
 const { SubMenu } = Menu;
 const Navbar = () => {
@@ -18,6 +19,9 @@ const Navbar = () => {
         </Menu.Item>
         <Menu.Item key="Contact">
           <NavLink to="/contact">Contact</NavLink>
+        </Menu.Item>
+        <Menu.Item key="blogs">
+          <NavLink to="/blogs">Blogs</NavLink>
         </Menu.Item>
         <Menu.Item key="dashboard">
           <NavLink to="/dashboard">Dashboard</NavLink>

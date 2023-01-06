@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
-const logInAuth = async (req, res, next) => {
+const User = require("../model/userRegister");
+const isAuthentication = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = await req.headers.authorization.split(" ")[1];
 
     if (!token) {
       res.status(403).json({ Message: "Unauthorized" });
@@ -12,7 +13,14 @@ const logInAuth = async (req, res, next) => {
     if (!decodad) {
       res.status(403).json({ Message: "Unauthorized" });
     }
+    const user = await User.findById(decodad._id);
+
+    if (!user) {
+      res.status(403).json({ Message: "Unauthorized" });
+    }
+    req.user = user;
+    next();
   } catch (error) {}
 };
 
-module.exports = logInAuth;
+module.exports = isAuthentication;

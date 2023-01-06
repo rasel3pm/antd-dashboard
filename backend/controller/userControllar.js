@@ -60,3 +60,19 @@ exports.loginController = async (req, res) => {
     res.status(401).json({ message: "wrong email or password" });
   }
 };
+
+//delete product by id
+
+exports.deleteItem = async (req, res) => {
+  try {
+    await User.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
+      if (!err) {
+        res.status(200).json({ message: "Delete todo success", data });
+      } else {
+        res.status(501).json({ Message: "Not Delete ", err });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

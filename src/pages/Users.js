@@ -12,7 +12,12 @@ const Users = () => {
       .catch((err) => swal(err.data.message + "Account not created", "danger"));
   }, [0]);
 
-  console.log(data);
+  const itemDelete = (_id) => {
+    axios
+      .delete(`/deleteuser/${_id}`)
+      .then((res) => console.log("deleted", res))
+      .catch((err) => console.log("err", err));
+  };
   return (
     <Table striped bordered hover>
       <thead>
@@ -21,6 +26,7 @@ const Users = () => {
           <th>Name</th>
           <th>email</th>
           <th>Create </th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +36,9 @@ const Users = () => {
             <td>{item.name}</td>
             <td>{item.email}</td>
             <td>{item.createdAt}</td>
+            <td>
+              <button onClick={itemDelete}>Delete</button>
+            </td>
           </tr>
         ))}
       </tbody>

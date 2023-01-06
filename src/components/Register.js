@@ -20,7 +20,7 @@ const Register = () => {
     e.preventDefault();
     e.target.reset();
     axios
-      .post("http://localhost:5000/create-user", signUp)
+      .post("/create-user", signUp)
       .then((data) => swal("Good job!", "Account created", "success", data))
       .catch((err) => swal(err.data.message + "Account not created", "danger"));
   };
