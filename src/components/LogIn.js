@@ -23,7 +23,13 @@ const LogIn = () => {
     // e.target.reset();
     axios
       .post("/login", login)
-      .then((data) => swal("login", "success", data))
+      .then((data) => {
+        if (data.data.access_token) {
+          localStorage.getItem("token", data.access_token);
+          navigate("/Users", { replace: true });
+        }
+      })
+
       .catch((err) => swal("login failed", "success", err));
   };
   return (
