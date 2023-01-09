@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Space } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [signUp, setSignUp] = useState({
     name: "",
     email: "",
@@ -21,7 +22,10 @@ const Register = () => {
     e.target.reset();
     axios
       .post("/create-user", signUp)
-      .then((data) => swal("Good job!", "Account created", "success", data))
+      .then((data) => {
+        swal("Good job!", "Account created", "success", data);
+        navigate("/create-post", { replace: true });
+      })
       .catch((err) => swal(err.data.message + "Account not created", "danger"));
   };
   return (

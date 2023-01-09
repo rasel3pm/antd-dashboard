@@ -1,9 +1,9 @@
 import React from "react";
-
+import Toggler from "../components/Toggler";
 const Contact = () => {
   return (
     <div>
-      <h3>Contact</h3>
+      <Toggler />
     </div>
   );
 };

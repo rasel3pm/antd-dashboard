@@ -4,8 +4,22 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LogIn = () => {
+  const testToasty = () => {
+    toast.success("🦄 Wow so easy!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -27,10 +41,23 @@ const LogIn = () => {
         if (data.data.access_token) {
           localStorage.getItem("token", data.access_token);
           navigate("/Users", { replace: true });
+        } else {
+          console.log("Error");
         }
       })
 
-      .catch((err) => swal("login failed", "success", err));
+      .catch((err) => {
+        toast.success(`Email or password is not currect`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
   };
   return (
     <div className="logIn_form">
@@ -98,8 +125,11 @@ const LogIn = () => {
           <Button type="link">
             <Link to="/register">Register</Link>
           </Button>
+
+          <Button onClick={testToasty}>Test Button</Button>
         </Form.Item>
       </Form>
+      <ToastContainer />
     </div>
   );
 };

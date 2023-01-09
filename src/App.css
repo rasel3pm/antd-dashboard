@@ -79,3 +79,15 @@
     list-style: none !important;
     text-decoration: none !important;
 }
+
+.scroll{
+    position: fixed;
+    z-index: 1;
+    height: 50px;
+    width: 100%;
+    transition: all 0.8s;
+}
+.fixed{
+    
+}
+
