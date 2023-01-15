@@ -16,6 +16,8 @@ import { useState } from "react";
 import Blogs from "./pages/Blogs";
 import CreatePost from "./pages/CreatePost";
 import Blog from "./pages/Blog";
+import SampleCard from "./components/SampleCard";
+import SinglePost from "./components/SinglePost";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
@@ -57,6 +59,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/posts" element={<SampleCard />} />
+          <Route path="/posts/:title" element={<SinglePost />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>

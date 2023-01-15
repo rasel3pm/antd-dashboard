@@ -1,6 +1,7 @@
 .card_container{
     margin-top: 40px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     justify-content: center;
     align-items: center;
     gap: 30px;

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// import CreatePost from "./CreatePost";
 import { blogData } from "../asset/Data";
-import {} from "@ant-design/icons";
 import { Avatar, Button, Card } from "antd";
 import { Link } from "react-router-dom";
 

@@ -1,14 +1,11 @@
 import React from "react";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Avatar, Card } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card } from "antd";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
-const SampleCard = () => {
+const SampleCard = ({ title, description, category }) => {
   return (
     <div>
       <Card
@@ -20,15 +17,17 @@ const SampleCard = () => {
           />
         }
         actions={[
-          <SettingOutlined key="setting" />,
-          <EditOutlined key="edit" />,
-          <EllipsisOutlined key="ellipsis" />,
+          <Button>
+            <Link to={title}>
+              Learn More <ArrowRightOutlined />
+            </Link>
+          </Button>,
         ]}
       >
         <Meta
           avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title="Card title"
-          description="This is the description"
+          title={title}
+          description={description}
         />
       </Card>
     </div>
