@@ -35,3 +35,37 @@ exports.getAllPost = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.deletePost = async (req, res) => {
+  try {
+    const postDelete = await Post.findByIdAndDelete();
+
+    if (postDelete) {
+      res.status(202).json({ message: "Post delete by find id,,Successfully" });
+    } else {
+      res.status(500).json({ message: "Post not delete by find id,Faild" });
+    }
+  } catch (err) {
+    res.status(202).json({ message: "Post not delete", err });
+  }
+};
+//post update by id and save
+exports.updatePost = async (req, res) => {
+  const { title, description, category } = req.body;
+
+  try {
+    const updatePost = await Post.findById({
+      title,
+      description,
+      category,
+    });
+    const updated = await updatePost.save();
+    if (updated) {
+      res.status(202).json({ message: "Post updated ,Successfully", updated });
+    } else {
+      res.status(204).json({ message: "Post not update,Faild" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};

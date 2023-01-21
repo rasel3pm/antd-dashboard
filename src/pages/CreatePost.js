@@ -1,51 +1,57 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input } from "antd";
 import axios from "axios";
 const { TextArea } = Input;
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const CreatePost = () => {
-  const testToasty = () => {
-    toast.success("🦄 Wow so easy!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  };
   const [post, setPost] = useState({
     title: "",
     description: "",
     category: "",
+    image: "",
   });
   const dataCatch = (e) => {
-    let data = { ...post };
-    data[e.target.name] = e.target.value;
-    setPost(data);
-    console.log(data);
+    if (e.target.neme === "image") {
+      let reader = new FileReader();
+
+      reader.onload = () => {
+        let data = { ...post };
+        data[e.target.name] = reader.result;
+        setPost(data);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      let data = { ...post };
+      data[e.target.name] = e.target.value;
+      setPost(data);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
+    const option = {
+      headers: {
+        Authorization: `${localStorage.getItem("access_token")}`,
+        Accept: `application/json`,
+      },
+    };
     axios
-      .post("/create-post", post)
+      .post("/create-post", post, option)
       .then((res) => {
-        toast.success(`Email or password is not currect`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        // toast.success(`Email or password is not currect`, {
+        //   position: "top-center",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "light",
+        // });
+        console.log("post created", res);
       })
       .catch((err) => console.log("failed", err));
   };
@@ -90,11 +96,9 @@ const CreatePost = () => {
             onChange={(e) => dataCatch(e)}
           />
         </Form.Item>
-        <br />
-
-        {/* <Upload>
-          <Button>Upload</Button>
-        </Upload> */}
+        <Form.Item>
+          <Input type="file" name="image" onChange={(e) => dataCatch(e)} />
+        </Form.Item>
 
         <Button htmlType="submit">Submit</Button>
       </Form>

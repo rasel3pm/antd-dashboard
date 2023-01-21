@@ -20,6 +20,7 @@ import SampleCard from "./components/SampleCard";
 import SinglePost from "./components/SinglePost";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
     <>
       <BrowserRouter>
