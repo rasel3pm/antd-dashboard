@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Button, Form, Input } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 
 const CreatePost = () => {
+  const navigate = useNavigate();
   const [post, setPost] = useState({
     title: "",
     description: "",
@@ -40,18 +40,8 @@ const CreatePost = () => {
     };
     axios
       .post("/create-post", post, option)
-      .then((res) => {
-        // toast.success(`Email or password is not currect`, {
-        //   position: "top-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        // });
-        console.log("post created", res);
+      .then((data) => {
+        navigate("/", { replace: true });
       })
       .catch((err) => console.log("failed", err));
   };

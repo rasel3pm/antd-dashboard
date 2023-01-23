@@ -36,19 +36,32 @@ exports.getAllPost = async (req, res) => {
   }
 };
 
+// exports.deletePost = async (req, res) => {
+//   try {
+//     await Post.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
+//       if (!err) {
+//         res.status(200).json({ message: "Post Delete success", data });
+//       } else {
+//         res.status(501).json({ Message: "Not Delete ", err });
+//       }
+//     });
+//   } catch (err) {
+//     res.status(501).json({ Message: "Not Delete ", err });
+//   }
+// };
+
 exports.deletePost = async (req, res) => {
   try {
-    const postDelete = await Post.findByIdAndDelete();
-
-    if (postDelete) {
-      res.status(202).json({ message: "Post delete by find id,,Successfully" });
-    } else {
-      res.status(500).json({ message: "Post not delete by find id,Faild" });
-    }
-  } catch (err) {
-    res.status(202).json({ message: "Post not delete", err });
+    const { id: _id } = req.params;
+    const deletePost = await Post.findByIdAndDelete(_id);
+    res.status(200).json(deletePost);
+  } catch (error) {
+    res.status(409).json({
+      message: error.message,
+    });
   }
 };
+
 //post update by id and save
 exports.updatePost = async (req, res) => {
   const { title, description, category } = req.body;
