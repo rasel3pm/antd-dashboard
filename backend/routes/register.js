@@ -3,12 +3,12 @@ const {
   createUser,
   allUsers,
   loginController,
-  deleteItem,
+  deleteUser,
 } = require("../controller/userControllar");
 
 router.post("/create-user", createUser);
 router.get("/all-users", allUsers);
 router.post("/login", loginController);
-router.delete("/deleteuser:id", deleteItem);
+router.delete("/deleteuser/:id", deleteUser);
 
 module.exports = router;

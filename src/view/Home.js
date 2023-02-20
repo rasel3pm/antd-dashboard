@@ -49,7 +49,7 @@ const Home = () => {
             }}
           >
             <Space>
-              <Spin tip="Loading" size="large">
+              <Spin tip="Loading Post" size="large">
                 <div className="content" />
               </Spin>
             </Space>

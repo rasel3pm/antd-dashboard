@@ -61,18 +61,21 @@ exports.loginController = async (req, res) => {
   }
 };
 
-//delete product by id
-
-exports.deleteItem = async (req, res) => {
+// DELETE /products/:id - delete a product by ID
+exports.deleteUser = async (req, res) => {
   try {
-    await User.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
-      if (!err) {
-        res.status(200).json({ message: "Delete todo success", data });
-      } else {
-        res.status(501).json({ Message: "Not Delete ", err });
-      }
-    });
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await User.deleteOne({ _id: userId });
+
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -1,20 +1,16 @@
 const Post = require("../model/post");
 
 exports.createPost = async (req, res) => {
-  const { title, description, category } = req.body;
+  const { title, description, category, author } = req.body;
   try {
     const post = await new Post({
       title,
       description,
       category,
+      author,
     });
     const newPost = await post.save();
-
-    if (newPost) {
-      res.status(201).json({ Message: "Post crated successfully", newPost });
-    } else {
-      res.status(406).json({ Message: "Post not created" });
-    }
+    res.status(201).json({ Message: "Post crated successfully", newPost });
   } catch (error) {
     console.log(error);
   }
@@ -36,29 +32,47 @@ exports.getAllPost = async (req, res) => {
   }
 };
 
+exports.deletePost = async (req, res) => {
+  try {
+    await Post.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
+      if (!err) {
+        res.status(200).json({ message: "Post Delete success", data });
+      } else {
+        res.status(501).json({ Message: "Not Delete ", err });
+      }
+    });
+  } catch (err) {
+    res.status(501).json({ Message: "Not Delete ", err });
+  }
+};
+
 // exports.deletePost = async (req, res) => {
 //   try {
-//     await Post.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
-//       if (!err) {
-//         res.status(200).json({ message: "Post Delete success", data });
-//       } else {
-//         res.status(501).json({ Message: "Not Delete ", err });
-//       }
+//     const { id: _id } = req.params;
+//     const deletePost = await Post.findByIdAndDelete(_id);
+//     res.status(200).json(deletePost);
+//   } catch (error) {
+//     res.status(409).json({
+//       message: error.message,
 //     });
-//   } catch (err) {
-//     res.status(501).json({ Message: "Not Delete ", err });
 //   }
 // };
 
 exports.deletePost = async (req, res) => {
   try {
-    const { id: _id } = req.params;
-    const deletePost = await Post.findByIdAndDelete(_id);
-    res.status(200).json(deletePost);
+    const post = await Post.findById(req.params.id);
+    if (post.username === req.body.username) {
+      try {
+        await post.delete();
+        res.status(200).json("Post Has been delete!");
+      } catch (error) {
+        res.status(500).json(error);
+      }
+    } else {
+      res.status(401).json("You can delete only your post!");
+    }
   } catch (error) {
-    res.status(409).json({
-      message: error.message,
-    });
+    res.status(500).json(error);
   }
 };
 

@@ -10,23 +10,12 @@ const CreatePost = () => {
     title: "",
     description: "",
     category: "",
-    image: "",
+    author: "",
   });
   const dataCatch = (e) => {
-    if (e.target.neme === "image") {
-      let reader = new FileReader();
-
-      reader.onload = () => {
-        let data = { ...post };
-        data[e.target.name] = reader.result;
-        setPost(data);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      let data = { ...post };
-      data[e.target.name] = e.target.value;
-      setPost(data);
-    }
+    let data = { ...post };
+    data[e.target.name] = e.target.value;
+    setPost(data);
   };
 
   const handleSubmit = (e) => {
@@ -67,7 +56,6 @@ const CreatePost = () => {
             onChange={(e) => dataCatch(e)}
           />
         </Form.Item>
-
         <Form.Item>
           <TextArea
             type="text"
@@ -77,7 +65,6 @@ const CreatePost = () => {
             onChange={(e) => dataCatch(e)}
           />
         </Form.Item>
-
         <Form.Item>
           <Input
             type="text"
@@ -86,10 +73,6 @@ const CreatePost = () => {
             onChange={(e) => dataCatch(e)}
           />
         </Form.Item>
-        <Form.Item>
-          <Input type="file" name="image" onChange={(e) => dataCatch(e)} />
-        </Form.Item>
-
         <Button htmlType="submit">Submit</Button>
       </Form>
     </div>

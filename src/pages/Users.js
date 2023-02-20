@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import swal from "sweetalert";
 
 const Users = () => {
@@ -12,11 +12,13 @@ const Users = () => {
       .catch((err) => swal(err.data.message + "Account not created", "danger"));
   }, [0]);
 
-  const itemDelete = (_id) => {
+  const deleteProduct = (_id) => {
     axios
-      .delete(`/deleteuser/${_id}`)
-      .then((res) => console.log("deleted", res))
-      .catch((err) => console.log("err", err));
+      .delete(`/deleteuser/${_id}`, {
+        method: "DELETE",
+      })
+      .then((res) => swal(`${res.data.message}`))
+      .catch((err) => swal(err));
   };
   return (
     <Table striped bordered hover>
@@ -37,7 +39,14 @@ const Users = () => {
             <td>{item.email}</td>
             <td>{item.createdAt}</td>
             <td>
-              <button onClick={itemDelete}>Delete</button>
+              <div>
+                <Button
+                  variant="danger"
+                  onClick={() => deleteProduct(item._id)}
+                >
+                  Delete
+                </Button>
+              </div>
             </td>
           </tr>
         ))}

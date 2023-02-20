@@ -125,8 +125,6 @@ const LogIn = () => {
           <Button type="link">
             <Link to="/register">Register</Link>
           </Button>
-
-          <Button onClick={testToasty}>Test Button</Button>
         </Form.Item>
       </Form>
       <ToastContainer />

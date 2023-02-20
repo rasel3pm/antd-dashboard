@@ -28,6 +28,7 @@ const SampleCard = ({ title, description, category }) => {
           avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
           title={title}
           description={description}
+          category={category}
         />
       </Card>
     </div>
