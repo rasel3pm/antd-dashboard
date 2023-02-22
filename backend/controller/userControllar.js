@@ -2,6 +2,7 @@ const User = require("../model/userRegister");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+//create a new user with name,email,password
 exports.createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -15,7 +16,11 @@ exports.createUser = async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     req.body.password = hash;
 
-    const newUser = await new User(req.body);
+    const newUser = await new User({
+      name,
+      email,
+      password: hash,
+    });
     const data = await newUser.save();
 
     res.status(200).json({ message: "User Created Successfully", user: data });

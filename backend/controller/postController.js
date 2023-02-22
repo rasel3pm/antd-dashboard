@@ -1,4 +1,20 @@
 const Post = require("../model/post");
+// const multer = require("multer");
+
+// const UPLODA_PATH = "./uploads";
+// const upload = multer({
+//   dest: UPLODA_PATH,
+//   limits: {
+//     fileSize: 1000000, //1mb
+//   },
+//   fileFilter: (req, file, cb) => {
+//     if (file.mimetype === "image/png" || file.mimetype === "image/jpg") {
+//       cb(null, true);
+//     } else {
+//       cb(null, false);
+//     }
+//   },
+// });
 
 exports.createPost = async (req, res) => {
   const { title, description, category, author } = req.body;
@@ -32,47 +48,22 @@ exports.getAllPost = async (req, res) => {
   }
 };
 
+// DELETE /post/:id - delete a post by ID
 exports.deletePost = async (req, res) => {
   try {
-    await Post.findByIdAndDelete({ _id: req.params.id }, (err, data) => {
-      if (!err) {
-        res.status(200).json({ message: "Post Delete success", data });
-      } else {
-        res.status(501).json({ Message: "Not Delete ", err });
-      }
-    });
-  } catch (err) {
-    res.status(501).json({ Message: "Not Delete ", err });
-  }
-};
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
 
-// exports.deletePost = async (req, res) => {
-//   try {
-//     const { id: _id } = req.params;
-//     const deletePost = await Post.findByIdAndDelete(_id);
-//     res.status(200).json(deletePost);
-//   } catch (error) {
-//     res.status(409).json({
-//       message: error.message,
-//     });
-//   }
-// };
-
-exports.deletePost = async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
-      try {
-        await post.delete();
-        res.status(200).json("Post Has been delete!");
-      } catch (error) {
-        res.status(500).json(error);
-      }
-    } else {
-      res.status(401).json("You can delete only your post!");
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
     }
-  } catch (error) {
-    res.status(500).json(error);
+
+    await Post.deleteOne({ _id: postId });
+
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

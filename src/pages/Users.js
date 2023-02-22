@@ -17,7 +17,9 @@ const Users = () => {
       .delete(`/deleteuser/${_id}`, {
         method: "DELETE",
       })
-      .then((res) => swal(`${res.data.message}`))
+      .then((res) => {
+        swal(`${res.data.message}`);
+      })
       .catch((err) => swal(err));
   };
   return (

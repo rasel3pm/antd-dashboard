@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const connectDB = require("./config/config");
 const router = require("./routes/index");
-const cloudinary = require("cloudinary");
+// const cloudinary = require("cloudinary");
 require("colors");
 
 dotenv.config();
@@ -22,11 +22,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(router);
 
 connectDB();
-cloudinary.config({
-  cloud_name: "dy0nenwvk",
-  api_key: "942357739641819",
-  api_secret: "2CaC2dOHU-n8x6sl85kvfQoHhHs",
-});
+// cloudinary.config({
+//   cloud_name: "dy0nenwvk",
+//   api_key: "942357739641819",
+//   api_secret: "2CaC2dOHU-n8x6sl85kvfQoHhHs",
+// });
 
 const port = process.env.PORT || 8080;
 

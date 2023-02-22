@@ -18,6 +18,7 @@ import CreatePost from "./pages/CreatePost";
 import Blog from "./pages/Blog";
 import SampleCard from "./components/SampleCard";
 import SinglePost from "./components/SinglePost";
+import PostUpdateForm from "./components/PostUpdateForm";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/posts" element={<SampleCard />} />
           <Route path="/posts/:title" element={<SinglePost />} />
+          <Route path="/postEditPopup" element={<PostUpdateForm />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
